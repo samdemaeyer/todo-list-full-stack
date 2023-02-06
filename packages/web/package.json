@@ -1,0 +1,15 @@
+{
+  "name": "@todo-list/web",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "http-server ./ -p 3001",
+    "dev": "concurrently \"npx tsc --watch\" \"yarn start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
