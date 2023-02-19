@@ -9,7 +9,9 @@
   "scripts": {
     "api:dev": "yarn workspace @todo-list/api dev",
     "web:dev": "yarn workspace @todo-list/web dev",
-    "dev": "concurrently \"yarn api:dev\" \"yarn web:dev\""
+    "react:dev": "yarn workspace @todo-list/react start",
+    "dev:web": "concurrently \"yarn api:dev\" \"yarn web:dev\"",
+    "dev:react": "concurrently \"yarn api:dev\" \"yarn react:dev\""
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
