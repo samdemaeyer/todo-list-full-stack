@@ -19,7 +19,7 @@ const todoItemInput = document.getElementById('add-todo-item-input');
 // ];
 (_a = document.getElementById('add-todo-item-form')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', (event) => __awaiter(void 0, void 0, void 0, function* () {
     event.preventDefault();
-    yield fetch(`http://localhost:3000/todo-list-items`, {
+    yield fetch(`http://localhost:3000/todos`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -31,10 +31,11 @@ const todoItemInput = document.getElementById('add-todo-item-input');
     renderItems();
 }));
 const toggleItem = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    const currentItemId = Number(event.getAttribute('data-list-id'));
+    const currentItemId = event.getAttribute('data-list-id');
+    console.log(currentItemId);
     // const listItem = items.find(({ id }) => id === currentItemId);
     // listItem && (listItem.done = event.checked);
-    yield fetch(`http://localhost:3000/todo-list-items/${currentItemId}/toggle`, { method: 'POST' });
+    yield fetch(`http://localhost:3000/todos/item/${currentItemId}/toggle`, { method: 'PUT' });
     setTimeout(renderItems, 850);
 });
 const createItem = ({ text, done, id }) => {
@@ -58,7 +59,7 @@ const createItem = ({ text, done, id }) => {
 const renderItems = () => __awaiter(void 0, void 0, void 0, function* () {
     todoList && (todoList.innerHTML = '');
     // const data = items;
-    const response = yield fetch('http://localhost:3000/todo-list-items');
+    const response = yield fetch('http://localhost:3000/todos');
     const data = yield response.json();
     [...data]
         .sort((x, y) => (x.done === y.done ? 0 : x.done ? 1 : -1))

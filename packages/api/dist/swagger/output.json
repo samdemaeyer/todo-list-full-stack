@@ -11,7 +11,7 @@
         "http"
     ],
     "paths": {
-        "/todo-list-items": {
+        "/todos": {
             "get": {
                 "description": "",
                 "parameters": [],
@@ -44,8 +44,42 @@
                 }
             }
         },
-        "/todo-list-items/{id}/toggle": {
-            "post": {
+        "/todos/item/{id}": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/todos/item/{id}/toggle": {
+            "put": {
                 "description": "",
                 "parameters": [
                     {
