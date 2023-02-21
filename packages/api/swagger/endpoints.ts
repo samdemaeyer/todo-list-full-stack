@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { app } from '../index';
 
-const defaultTodoListItmes = [
+const defaultTodoListItems = [
   { id: 1, text: 'Something important to do', done: true },
   { id: 2, text: 'Another something', done: false },
   { id: 3, text: 'Get a new pencil', done: false },
@@ -9,19 +9,29 @@ const defaultTodoListItmes = [
 ];
 
 export const endpoints = (): void => {
-  app.get('/todo-list-items', (req: Request, res: Response) => {
-    res.send(defaultTodoListItmes);
+  app.get('/todos', (req: Request, res: Response) => {
+    res.send(defaultTodoListItems);
   });
 
-  app.post('/todo-list-items', (req: Request, res: Response) => {
-    const newItem = { text: req.body.text, id: defaultTodoListItmes.length + 1, done: false };
-    defaultTodoListItmes.push(newItem);
+  app.get('/todos/item/:id', (req: Request, res: Response) => {
+    const currentItem = defaultTodoListItems.find(({ id }) => id === Number(req.params.id));
+    currentItem && (currentItem.done = !currentItem?.done);
+    res.send(currentItem);
+  });
+
+  app.post('/todos', (req: Request, res: Response) => {
+    const newItem = { text: req.body.text, id: defaultTodoListItems.length + 1, done: false };
+    defaultTodoListItems.push(newItem);
     res.send(newItem);
   });
 
-  app.post('/todo-list-items/:id/toggle', (req: Request, res: Response) => {
-    const currentItem = defaultTodoListItmes.find(({ id }) => id === Number(req.params.id));
+  app.put('/todos/item/:id/toggle', (req: Request, res: Response) => {
+    const currentItem = defaultTodoListItems.find(({ id }) => id === Number(req.params.id));
     currentItem && (currentItem.done = !currentItem?.done);
-    res.send(req.params);
+    res.send(currentItem);
+  });
+
+  app.delete('/todos/item/:id', (req: Request, res: Response) => {
+    res.send();
   });
 };

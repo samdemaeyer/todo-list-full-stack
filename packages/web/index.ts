@@ -15,7 +15,7 @@ const todoItemInput = document.getElementById('add-todo-item-input') as HTMLInpu
 
 document.getElementById('add-todo-item-form')?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  await fetch(`http://localhost:3000/todo-list-items`, {
+  await fetch(`http://localhost:3000/todos`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,10 +28,11 @@ document.getElementById('add-todo-item-form')?.addEventListener('submit', async 
 });
 
 const toggleItem = async (event: HTMLInputElement) => {
-  const currentItemId = Number(event.getAttribute('data-list-id'));
+  const currentItemId = event.getAttribute('data-list-id');
+  console.log(currentItemId)
   // const listItem = items.find(({ id }) => id === currentItemId);
   // listItem && (listItem.done = event.checked);
-  await fetch(`http://localhost:3000/todo-list-items/${currentItemId}/toggle`, { method: 'POST' });
+  await fetch(`http://localhost:3000/todos/item/${currentItemId}/toggle`, { method: 'PUT' });
   setTimeout(renderItems, 850);
 };
 
@@ -59,7 +60,7 @@ const createItem = ({ text, done, id }: Item) => {
 const renderItems = async () => {
   todoList && (todoList.innerHTML = '');
   // const data = items;
-  const response = await fetch('http://localhost:3000/todo-list-items');
+  const response = await fetch('http://localhost:3000/todos');
   const data = await response.json();
   [...data]
     .sort((x, y) => (x.done === y.done ? 0 : x.done ? 1 : -1))
